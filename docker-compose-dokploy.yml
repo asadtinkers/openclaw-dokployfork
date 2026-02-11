@@ -1,0 +1,35 @@
+services:
+  openclaw-gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile.openclaw
+    image: openclaw:dokploy
+    restart: unless-stopped
+    environment:
+      - HOME=/home/node
+      - NODE_ENV=production
+      - OPENCLAW_GATEWAY_BIND=0.0.0.0  # Changed for Dokploy/Traefik
+      - OPENCLAW_GATEWAY_PORT=18789
+      - OPENCLAW_GATEWAY_TOKEN=${OPENCLAW_GATEWAY_TOKEN}
+      - GOG_KEYRING_PASSWORD=${GOG_KEYRING_PASSWORD}
+      - XDG_CONFIG_HOME=/home/node/.openclaw
+    volumes:
+      # Use Dokploy's named volume pattern for persistence
+      - openclaw-config:/home/node/.openclaw
+      - openclaw-workspace:/home/node/.openclaw/workspace
+    networks:
+      - dokploy-network
+    labels:
+      # Traefik routing - replace with your domain
+      - "traefik.enable=true"
+      - "traefik.http.services.openclaw.loadbalancer.server.port=18789"
+      # Keep Gateway internal - no direct external port mapping
+    command: ["gateway", "--bind", "0.0.0.0", "--port", "18789", "--allow-unconfigured"]
+
+volumes:
+  openclaw-config:
+  openclaw-workspace:
+
+networks:
+  dokploy-network:
+    external: true
