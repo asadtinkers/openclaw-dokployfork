@@ -22,9 +22,9 @@ services:
     labels:
       # Traefik routing - replace with your domain
       - "traefik.enable=true"
-      - "traefik.http.services.openclaw.loadbalancer.server.port=18789"
       # Keep Gateway internal - no direct external port mapping
-    command: ["gateway", "--bind", "0.0.0.0", "--port", "18789", "--allow-unconfigured"]
+    # FIX: Full command with node executable
+    command: ["node", "dist/index.js", "gateway", "--bind", "0.0.0.0", "--port", "18789", "--allow-unconfigured"]
 
 volumes:
   openclaw-config:
@@ -33,3 +33,6 @@ volumes:
 networks:
   dokploy-network:
     external: true
+
+
+    
