@@ -2,10 +2,13 @@
 FROM node:22-bookworm
 
 # Install base packages
-RUN apt-get update && apt-get install -y socat && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y \
+    socat \
+    golang-go \
+    git \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir /usr/local/bin/gocli
-
 RUN mkdir /usr/local/bin/goplaces
 
 # Example binary 1: Gmail CLI
