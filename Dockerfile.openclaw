@@ -21,6 +21,13 @@ RUN curl -L https://github.com/steipete/goplaces/releases/download/v0.2.1/goplac
 # RUN curl -L https://github.com/steipete/wacli/releases/latest/download/wacli_Linux_x86_64.tar.gz \
 #  | tar -xz -C /usr/local/bin && chmod +x /usr/local/bin/wacli
 
+# Binary 3: WhatsApp CLI - Build from source
+WORKDIR /tmp
+RUN curl -L https://github.com/steipete/wacli/archive/refs/tags/v0.2.0.tar.gz | tar -xz && \
+    cd wacli-0.2.0 && \
+    go build -tags sqlite_fts5 -o /usr/local/bin/wacli ./cmd/wacli && \
+    chmod +x /usr/local/bin/wacli
+
 # Add more binaries below using the same pattern
 
 WORKDIR /app
@@ -38,4 +45,5 @@ RUN pnpm ui:build
 
 ENV NODE_ENV=production
 ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ENV NODE_ENV=production
 CMD ["node","dist/index.js"]
