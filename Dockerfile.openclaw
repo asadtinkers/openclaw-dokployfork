@@ -4,29 +4,21 @@ FROM node:22-bookworm
 # Install base packages
 RUN apt-get update && apt-get install -y socat && rm -rf /var/lib/apt/lists/*
 
+
+
 # Example binary 1: Gmail CLI
-RUN set -e && \
-    curl -fsSL -o /tmp/gog.tar.gz \
-    https://github.com/steipete/gog/releases/latest/download/gog_Linux_x86_64.tar.gz && \
-    tar -xzf /tmp/gog.tar.gz -C /usr/local/bin && \
-    chmod +x /usr/local/bin/gog && \
-    rm /tmp/gog.tar.gz
+RUN curl -L https://github.com/steipete/gogcli/releases/download/v0.9.0/gogcli_0.9.0_linux_arm64.tar.gz \
+  | tar -xz -C /usr/local/bin && chmod +x /usr/local/bin/gocli
 
 # Example binary 2: Google Places CLI
-RUN set -e && \
-    curl -fsSL -o /tmp/goplaces.tar.gz \
-    https://github.com/steipete/goplaces/releases/latest/download/goplaces_Linux_x86_64.tar.gz && \
-    tar -xzf /tmp/goplaces.tar.gz -C /usr/local/bin && \
-    chmod +x /usr/local/bin/goplaces && \
-    rm /tmp/goplaces.tar.gz
+RUN curl -L https://github.com/steipete/goplaces/releases/latest/download/goplaces_Linux_x86_64.tar.gz \
+  | tar -xz -C /usr/local/bin && chmod +x /usr/local/bin/goplaces
 
 # Example binary 3: WhatsApp CLI
-RUN set -e && \
-    curl -fsSL -o /tmp/wacli.tar.gz \
-    https://github.com/steipete/wacli/releases/latest/download/wacli_Linux_x86_64.tar.gz && \
-    tar -xzf /tmp/wacli.tar.gz -C /usr/local/bin && \
-    chmod +x /usr/local/bin/wacli && \
-    rm /tmp/wacli.tar.gz
+RUN curl -L https://github.com/steipete/wacli/releases/latest/download/wacli_Linux_x86_64.tar.gz \
+  | tar -xz -C /usr/local/bin && chmod +x /usr/local/bin/wacli
+
+# Add more binaries below using the same pattern
 
 WORKDIR /app
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
