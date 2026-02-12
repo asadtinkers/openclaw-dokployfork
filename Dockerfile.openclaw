@@ -25,11 +25,11 @@ RUN curl -L https://github.com/steipete/goplaces/releases/download/v0.2.1/goplac
 #  | tar -xz -C /usr/local/bin && chmod +x /usr/local/bin/wacli
 
 # Binary 3: WhatsApp CLI - Build from source
-WORKDIR /tmp
-RUN curl -L https://github.com/steipete/wacli/archive/refs/tags/v0.2.0.tar.gz | tar -xz && \
-    cd wacli-0.2.0 && \
-    go build -tags sqlite_fts5 -o /usr/local/bin/wacli ./cmd/wacli && \
-    chmod +x /usr/local/bin/wacli
+# WORKDIR /tmp
+# RUN curl -L https://github.com/steipete/wacli/archive/refs/tags/v0.2.0.tar.gz | tar -xz && \
+#    cd wacli-0.2.0 && \
+#    go build -tags sqlite_fts5 -o /usr/local/bin/wacli ./cmd/wacli && \
+#    chmod +x /usr/local/bin/wacli
 
 # Add more binaries below using the same pattern
 
