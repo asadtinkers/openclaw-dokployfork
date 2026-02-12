@@ -14,7 +14,7 @@ FROM node:22-bookworm
 RUN apt-get update && apt-get install -y socat && rm -rf /var/lib/apt/lists/*
 
 # Copy wacli from builder stage
-RUN mkdir /usr/local/bin/gocli
+RUN mkdir /usr/local/bin/wacli
 COPY --from=wacli-builder /usr/local/bin/wacli /usr/local/bin/wacli
 
 # Download pre-built ARM64 binaries
