@@ -8,7 +8,7 @@ services:
     environment:
       - HOME=/home/node
       - NODE_ENV=production
-      - OPENCLAW_GATEWAY_BIND=0.0.0.0  # Changed for Dokploy/Traefik
+      - OPENCLAW_GATEWAY_BIND=lan  # ✅ Correct: "lan" not "0.0.0.0"
       - OPENCLAW_GATEWAY_PORT=18789
       - OPENCLAW_GATEWAY_TOKEN=${OPENCLAW_GATEWAY_TOKEN}
       - GOG_KEYRING_PASSWORD=${GOG_KEYRING_PASSWORD}
@@ -23,9 +23,14 @@ services:
       # Traefik routing - replace with your domain
       - "traefik.enable=true"
       # Keep Gateway internal - no direct external port mapping
-    # FIX: Full command with node executable
-    command: ["node", "dist/index.js", "gateway", "--bind", "0.0.0.0", "--port", "18789", "--allow-unconfigured"]
-
+    # ✅ CORRECTED: Add node dist/index.js prefix
+    command: [
+      "node", "dist/index.js",
+      "gateway",
+      "--bind", "lan",
+      "--port", "18789",
+      "--allow-unconfigured"
+    ]
 volumes:
   openclaw-config:
   openclaw-workspace:
